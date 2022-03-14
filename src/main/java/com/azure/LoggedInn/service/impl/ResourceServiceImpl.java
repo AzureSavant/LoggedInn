@@ -1,6 +1,5 @@
 package com.azure.LoggedInn.service.impl;
 
-import com.azure.LoggedInn.mappers.HostMapper;
 import com.azure.LoggedInn.mappers.ResourceMapper;
 import com.azure.LoggedInn.models.Resource;
 import com.azure.LoggedInn.repositories.ResourceRepository;

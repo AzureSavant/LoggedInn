@@ -1,9 +1,9 @@
 package com.azure.LoggedInn.controllers;
 
-import com.azure.LoggedInn.dto.TravelerDTO;
-import com.azure.LoggedInn.mappers.TravelerMapper;
-import com.azure.LoggedInn.models.Traveler;
-import com.azure.LoggedInn.service.TravelerService;
+import com.azure.LoggedInn.dto.UserDTO;
+import com.azure.LoggedInn.mappers.UserMapper;
+import com.azure.LoggedInn.models.User;
+import com.azure.LoggedInn.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,53 +12,53 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/traveler")
+@RequestMapping(path = "/api/User")
 @RequiredArgsConstructor
 public class TravelerController {
 
-    private final TravelerService travelerService;
-    private final TravelerMapper travelerMapper;
+    private final UserService UserService;
+    private final UserMapper UserMapper;
 
     @GetMapping
     @ResponseBody
     @ResponseStatus(code = HttpStatus.OK)
-    public List<Traveler> getTravelers(){
-        return this.travelerService.getAll();
+    public List<User> getUsers(){
+        return this.UserService.getAll();
     }
 
     @GetMapping(params = "id")
     @ResponseBody
     @ResponseStatus(code = HttpStatus.OK)
-    public Traveler getTravelerById(@RequestParam("id") long id){
-        return this.travelerService.getTravelerById(id);
+    public User getUserById(@RequestParam("id") long id){
+        return this.UserService.getUserById(id);
     }
 
     @PostMapping( "/register")
     @ResponseBody
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Traveler createTraveler(@RequestBody @Valid Traveler traveler){
-        return this.travelerService.saveTraveler(traveler);
+    public User createUser(@RequestBody @Valid User User){
+        return this.UserService.saveUser(User);
     }
 
     @PutMapping(value = "/update", params = "id")
     @ResponseBody
     @ResponseStatus(code = HttpStatus.OK)
-    public Traveler updateTraveler(@RequestParam("id") long id, @RequestBody @Valid TravelerDTO newTravelerDTO){
-        Traveler  newTraveler = travelerMapper.DTOtoTraveler(newTravelerDTO);
-        return this.travelerService.updateTraveler(id, newTraveler);
+    public User updateUser(@RequestParam("id") long id, @RequestBody @Valid UserDTO newUserDTO){
+        User  newUser = UserMapper.DTOtoUser(newUserDTO);
+        return this.UserService.updateUser(id, newUser);
     }
 
 
     @DeleteMapping(value = "/delete", params = "id")
     @ResponseStatus(code = HttpStatus.OK)
-    public void deleteTraveler(@RequestParam("id") long id){
-        this.travelerService.deleteTraveler(id);
+    public void deleteUser(@RequestParam("id") long id){
+        this.UserService.deleteUser(id);
     }
 
     @DeleteMapping(value = "/delete")
     @ResponseStatus(code = HttpStatus.OK)
-    public void deleteTraveler(@RequestBody TravelerDTO travelerDTO){
-        Traveler traveler = travelerMapper.DTOtoTraveler(travelerDTO);
-        this.travelerService.deleteTraveler(traveler);
+    public void deleteUser(@RequestBody UserDTO UserDTO){
+        User User = UserMapper.DTOtoUser(UserDTO);
+        this.UserService.deleteUser(User);
     }
 }

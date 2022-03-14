@@ -1,7 +1,6 @@
 package com.azure.LoggedInn.service;
 
 import com.azure.LoggedInn.models.Resource;
-import com.azure.LoggedInn.models.Traveler;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

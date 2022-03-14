@@ -1,19 +1,19 @@
 package com.azure.LoggedInn.mappers;
 
-import com.azure.LoggedInn.dto.HostDTO;
-import com.azure.LoggedInn.models.Host;
+import com.azure.LoggedInn.dto.UserDTO;
+import com.azure.LoggedInn.models.User;
 import org.mapstruct.*;
 
 @Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, componentModel = "spring")
-public interface HostMapper {
+public interface UserMapper {
 
 
-    Host DTOtoHost(HostDTO hostDTO);
+    User DTOtoUser(UserDTO userDTO);
 
-    HostDTO hostToDTO(Host host);
+    UserDTO UserToDTO(User user);
 
     @Mappings({@Mapping(target = "id", ignore = true),
             @Mapping(target = "password", ignore = true),
             @Mapping(target = "email", ignore = true)})
-    void customMapHost(@MappingTarget Host targetHost, Host sourceHost);
+    void customMapUser(@MappingTarget User targetUser, User sourceUser);
 }

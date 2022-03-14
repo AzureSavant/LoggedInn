@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "host",schema = "public")
-public class Host {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class Host {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    public Host(String name, String surname, String password, String email, String phoneNumber) {
+    public User(String name, String surname, String password, String email, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.password = password;
@@ -50,7 +50,7 @@ public class Host {
         this.phoneNumber = phoneNumber;
     }
 
-    public Host(String name, String surname, String password, String email) {
+    public User(String name, String surname, String password, String email) {
         this.name = name;
         this.surname = surname;
         this.password = password;

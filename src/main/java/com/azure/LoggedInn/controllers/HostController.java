@@ -1,10 +1,10 @@
 package com.azure.LoggedInn.controllers;
 
 import com.azure.LoggedInn.dto.EmailDTO;
-import com.azure.LoggedInn.dto.HostDTO;
-import com.azure.LoggedInn.mappers.HostMapper;
-import com.azure.LoggedInn.models.Host;
-import com.azure.LoggedInn.service.HostService;
+import com.azure.LoggedInn.dto.UserDTO;
+import com.azure.LoggedInn.mappers.UserMapper;
+import com.azure.LoggedInn.models.User;
+import com.azure.LoggedInn.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,65 +13,65 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/host")
+@RequestMapping(path = "api/User")
 @RequiredArgsConstructor
 public class HostController {
 
-     private final HostService hostService;
-     private final HostMapper hostMapper;
+     private final UserService userService;
+     private final UserMapper userMapper;
 
      @GetMapping
      @ResponseBody
      @ResponseStatus(code = HttpStatus.OK)
-     public List<Host> getHosts(){
+     public List<User> getUsers(){
 
-          return hostService.getAll();
+          return userService.getAll();
      }
 
      @GetMapping(params ="id")
      @ResponseBody
      @ResponseStatus(code = HttpStatus.OK)
-     public Host getHostById(@RequestParam("id") long id){
-          return hostService.getUserById(id);
+     public User getUserById(@RequestParam("id") long id){
+          return userService.getUserById(id);
      }
 
      @PostMapping("/register")
      @ResponseBody
      @ResponseStatus(code = HttpStatus.CREATED)
-     public Host createHost(@RequestBody @Valid HostDTO hostDTO){
-          Host host = hostMapper.DTOtoHost(hostDTO);
+     public User createUser(@RequestBody @Valid UserDTO userDTO){
+          User user = userMapper.DTOtoUser(userDTO);
 
-          return this.hostService.saveHost(host);
+          return this.userService.saveUser(user);
      }
 
 
      @PutMapping(value = "/update",params = "id")
      @ResponseBody
      @ResponseStatus(code = HttpStatus.OK)
-     public Host updateHost(@RequestParam("id") long id, @RequestBody @Valid   HostDTO newHostDTO){
-          Host newHost = hostMapper.DTOtoHost(newHostDTO);
+     public User updateUser(@RequestParam("id") long id, @RequestBody @Valid UserDTO newUserDTO){
+          User newUser = userMapper.DTOtoUser(newUserDTO);
 
-          return this.hostService.updateHost(id, newHost);
+          return this.userService.updateUser(id, newUser);
      }
 
-     //This might not be needed...
+     // This might not be needed...
      @PutMapping(value = "/update")
      @ResponseStatus(code = HttpStatus.OK)
-     public void updateHostEmail(@RequestBody @Valid EmailDTO emailDTO){
-          this.hostService.updateHostEmail(emailDTO.getOldEmail(), emailDTO.getNewEmail());
+     public void updateUserEmail(@RequestBody @Valid EmailDTO emailDTO){
+          this.userService.updateUserEmail(emailDTO.getOldEmail(), emailDTO.getNewEmail());
      }
 
      @DeleteMapping(value = "/delete", params = "id")
      @ResponseStatus(code = HttpStatus.OK )
-     public void deleteHostById(@RequestParam("id") long id){
-          this.hostService.deleteHost(id);
+     public void deleteUserById(@RequestParam("id") long id){
+          this.userService.deleteUser(id);
      }
 
      @DeleteMapping(value = "/delete")
      @ResponseStatus(code = HttpStatus.OK)
-     public void deleteHost(@RequestBody @Valid  HostDTO hostDTO){
-          Host host = hostMapper.DTOtoHost(hostDTO);
-          this.hostService.deleteHost(host);
+     public void deleteUser(@RequestBody @Valid UserDTO userDTO){
+          User user = userMapper.DTOtoUser(userDTO);
+          this.userService.deleteUser(user);
      }
 
 }

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @AllArgsConstructor
-public class HostDTO {
+public class UserDTO {
 
     protected String name;
 
