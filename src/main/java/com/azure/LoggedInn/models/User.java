@@ -8,26 +8,28 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "host",schema = "public")
+@Table(name = "host", schema = "public")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long  id;
+    private long id;
 
     @NotNull
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @NotNull
-    @Column(name = "surname",nullable = false)
+    @Column(name = "surname", nullable = false)
     private String surname;
 
     @NotNull
@@ -35,12 +37,16 @@ public class User {
     private String password;
 
     @NotNull
-    @Email (regexp = ValidationConstraints.EMAIL_REGEX)
+    @Email(regexp = ValidationConstraints.EMAIL_REGEX)
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "roles")
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 
     public User(String name, String surname, String password, String email, String phoneNumber) {
         this.name = name;

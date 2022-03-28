@@ -1,7 +1,9 @@
 package com.azure.LoggedInn.service.impl;
 
 import com.azure.LoggedInn.mappers.UserMapper;
+import com.azure.LoggedInn.models.Role;
 import com.azure.LoggedInn.models.User;
+import com.azure.LoggedInn.repositories.RoleRepository;
 import com.azure.LoggedInn.repositories.UserRepository;
 import com.azure.LoggedInn.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final RoleRepository roleRepository;
 
     @Override
     public User getUserByEmail(String email) {
@@ -29,6 +32,20 @@ public class UserServiceImpl implements UserService {
     public User getUserById(long id) {
 
         return this.userRepository.getFirstById(id);
+    }
+
+    @Override
+    public void addRoleToUser(String email, String roleName) {
+        User user = this.userRepository.getFirstByEmail(email);
+        Role role = this.roleRepository.findRoleByName(roleName);
+        user.getRoles().add(role);
+
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public Role saveRole(Role role) {
+        return this.roleRepository.save(role);
     }
 
     @Override
@@ -50,7 +67,6 @@ public class UserServiceImpl implements UserService {
         User repoUser = this.userRepository.getFirstById(id);
         userMapper.customMapUser(repoUser, newUser);
 
-
         return this.userRepository.save(repoUser);
     }
 
@@ -59,13 +75,12 @@ public class UserServiceImpl implements UserService {
     public void updateUserPassword(long id, String oldPassword, String newPassword) {
         User user = this.userRepository.getById(id);
 
-        if(passwordEncoder.matches(oldPassword, user.getPassword())){
+        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
             String encodedPasswordNew = passwordEncoder.encode(newPassword);
             user.setPassword(encodedPasswordNew);
 
-           this.userRepository.save(user);
-        }
-        else
+            this.userRepository.save(user);
+        } else
             throw new InputMismatchException("Passwords do not match.");
     }
 
@@ -89,7 +104,6 @@ public class UserServiceImpl implements UserService {
 
         this.userRepository.delete(repoUser);
     }
-
 
 
 }

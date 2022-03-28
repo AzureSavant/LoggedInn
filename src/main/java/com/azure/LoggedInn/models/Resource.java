@@ -35,7 +35,7 @@ public class Resource {
     @Column(name = "extras")
     private String extras;
 
-    //TODO: Implement relations between Host ,Traveler,  ResourceRating  ,Rent, ResourceLocation
+    //TODO: Implement relations between User,  ResourceRating, Rent, ResourceLocation
     public Resource(@NotEmpty String name, String description, @NotEmpty String resourceType, String extras) {
         this.name = name;
         this.description = description;

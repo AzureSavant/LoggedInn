@@ -1,5 +1,6 @@
 package com.azure.LoggedInn.service;
 
+import com.azure.LoggedInn.models.Role;
 import com.azure.LoggedInn.models.User;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,10 @@ public interface UserService {
     User getUserByEmail(String email);
 
     User getUserById (long id);
+
+    void addRoleToUser(String email, String roleName);
+
+    Role saveRole(Role role);
 
     List<User> getAll();
 
