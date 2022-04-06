@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "resource", schema = "public")
 public class Resource {
 
     @Id

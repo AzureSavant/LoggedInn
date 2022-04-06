@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -24,20 +25,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
-
-        return this.userRepository.getFirstByEmail(email);
+        return this.userRepository.getFirstByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
     }
 
     @Override
     public User getUserById(long id) {
-
-        return this.userRepository.getFirstById(id);
+        return this.userRepository.getFirstById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
     }
 
     @Override
     public void addRoleToUser(String email, String roleName) {
-        User user = this.userRepository.getFirstByEmail(email);
-        Role role = this.roleRepository.findRoleByName(roleName);
+        User user = getUserByEmail(email);
+        Role role = this.roleRepository.findRoleByName(roleName)
+                .orElseThrow(() -> new EntityNotFoundException("Role Not Found"));
         user.getRoles().add(role);
 
         this.userRepository.save(user);
@@ -50,7 +52,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-
         return this.userRepository.findAll();
     }
 
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(long id, User newUser) {
-        User repoUser = this.userRepository.getFirstById(id);
+        User repoUser = getUserById(id);
         userMapper.customMapUser(repoUser, newUser);
 
         return this.userRepository.save(repoUser);
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserPassword(long id, String oldPassword, String newPassword) {
-        User user = this.userRepository.getById(id);
+        User user = getUserById(id);
 
         if (passwordEncoder.matches(oldPassword, user.getPassword())) {
             String encodedPasswordNew = passwordEncoder.encode(newPassword);
@@ -86,8 +87,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserEmail(String oldEmail, String newEmail) {
-        User repoUser = this.userRepository.getFirstByEmail(oldEmail);
-
+        User repoUser = getUserByEmail(oldEmail);
         repoUser.setEmail(newEmail);
 
         this.userRepository.save(repoUser);
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(User user) {
-        User repoUser = this.userRepository.getFirstByEmail(user.getEmail());
+        User repoUser = getUserByEmail(user.getEmail());
 
         this.userRepository.delete(repoUser);
     }

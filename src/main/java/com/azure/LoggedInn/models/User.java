@@ -16,7 +16,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "host", schema = "public")
+@Table(name = "user", schema = "public")
 public class User {
 
     @Id
