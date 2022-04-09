@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/User")
+@RequestMapping(path = "api/user/host")
 @RequiredArgsConstructor
 public class HostController {
 
