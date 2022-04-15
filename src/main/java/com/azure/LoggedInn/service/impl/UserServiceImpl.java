@@ -7,7 +7,6 @@ import com.azure.LoggedInn.repositories.RoleRepository;
 import com.azure.LoggedInn.repositories.UserRepository;
 import com.azure.LoggedInn.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.control.MappingControl;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -45,21 +44,34 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void addRoleToUser(String email, String roleName) {
         User user = getUserByEmail(email);
-        Role role = this.roleRepository.findRoleByName(roleName)
-                .orElseThrow(() -> new EntityNotFoundException("Role Not Found"));
+        Role role = findRoleByName(roleName);
         user.getRoles().add(role);
 
         this.userRepository.save(user);
     }
 
     @Override
-    public Role saveRole(Role role) {
-        return this.roleRepository.save(role);
+    public void saveRole(Role role) {
+        this.roleRepository.save(role);
+    }
+
+    @Override
+    public Role findRoleByName(String roleName) {
+        return this.roleRepository.findRoleByName(roleName)
+                .orElseThrow(() -> new EntityNotFoundException("Role Not Found"));
     }
 
     @Override
     public List<User> getAll() {
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getAllWithRole(String roleName) {
+        Role role = findRoleByName(roleName);
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        return this.userRepository.getAllByRolesIn(roles);
     }
 
     @Override
@@ -77,7 +89,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         return this.userRepository.save(repoUser);
     }
-
 
     @Override
     public void updateUserPassword(long id, String oldPassword, String newPassword) {
@@ -111,7 +122,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         this.userRepository.delete(repoUser);
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

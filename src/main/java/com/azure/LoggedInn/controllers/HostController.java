@@ -5,6 +5,7 @@ import com.azure.LoggedInn.dto.UserDTO;
 import com.azure.LoggedInn.mappers.UserMapper;
 import com.azure.LoggedInn.models.User;
 import com.azure.LoggedInn.service.UserService;
+import com.azure.LoggedInn.shared.RoleNameConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class HostController {
      @ResponseStatus(code = HttpStatus.OK)
      public List<User> getUsers(){
 
-          return userService.getAll();
+          return userService.getAllWithRole(RoleNameConst.HOST);
      }
 
      @GetMapping(params ="id")

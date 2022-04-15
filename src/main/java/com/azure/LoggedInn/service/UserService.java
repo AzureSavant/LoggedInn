@@ -4,6 +4,7 @@ import com.azure.LoggedInn.models.Role;
 import com.azure.LoggedInn.models.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -15,9 +16,13 @@ public interface UserService {
 
     void addRoleToUser(String email, String roleName);
 
-    Role saveRole(Role role);
+    void saveRole(Role role);
+
+    Role findRoleByName(String roleName);
 
     List<User> getAll();
+
+    List<User> getAllWithRole(String Role);
 
     User saveUser(User user);
 
