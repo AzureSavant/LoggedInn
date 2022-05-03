@@ -42,7 +42,8 @@ public class HostController {
      public User createUser(@RequestBody @Valid UserDTO userDTO){
           User user = userMapper.DTOtoUser(userDTO);
 
-          return this.userService.saveUser(user);
+          return this.userService.createUser(
+                  user);
      }
 
 

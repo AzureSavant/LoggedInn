@@ -30,10 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     // Disable login for testing
-  /*  @Override
+ @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests().anyRequest().permitAll();
-    }*/
+    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

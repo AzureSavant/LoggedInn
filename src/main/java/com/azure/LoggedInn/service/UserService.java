@@ -24,7 +24,7 @@ public interface UserService {
 
     List<User> getAllWithRole(String Role);
 
-    User saveUser(User user);
+    User createUser(User user);
 
     User updateUser(long id, User newUser);
 

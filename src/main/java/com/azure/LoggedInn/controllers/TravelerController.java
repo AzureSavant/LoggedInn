@@ -39,7 +39,7 @@ public class TravelerController {
     @ResponseBody
     @ResponseStatus(code = HttpStatus.CREATED)
     public User createUser(@RequestBody @Valid User User){
-        return this.UserService.saveUser(User);
+        return this.UserService.createUser(User);
     }
 
     @PutMapping(value = "/update", params = "id")
