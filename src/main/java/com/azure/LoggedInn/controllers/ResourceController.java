@@ -21,6 +21,6 @@ public class ResourceController {
     @ResponseBody
     @ResponseStatus(code = HttpStatus.OK)
     List<Resource> getResources(){
-        return resourceService.getAll();
+        return this.resourceService.getAll();
     }
 }

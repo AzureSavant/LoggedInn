@@ -1,5 +1,6 @@
 package com.azure.LoggedInn.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "resource", schema = "public")
 public class Resource {
 
@@ -21,26 +23,57 @@ public class Resource {
     private long id;
 
     @NotNull
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
 
-    @Column(name = "description",nullable = false)
+    @Column(name = "description")
     private String description;
 
     @NotNull
-    @Column(name = "resource_type",nullable = false)
+    @Column(name = "resource_type", nullable = false)
     private String resourceType;
 
 
     @Column(name = "extras")
     private String extras;
 
-    //TODO: Implement relations between User,  ResourceRating, Rent, ResourceLocation
+    @NotNull
+    @Column(name = "address", nullable = false, unique = true)
+    private String address;
+
+    @NotNull
+    @Column(name = "city", nullable = false, unique = true)
+    private String city;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+    //TODO: Implement relations between Rent, Resource_Cost
     public Resource(@NotEmpty String name, String description, @NotEmpty String resourceType, String extras) {
         this.name = name;
         this.description = description;
         this.resourceType = resourceType;
         this.extras = extras;
+    }
+
+    public Resource(String name, String description, String resourceType, String extras, String address, String city) {
+        this.name = name;
+        this.description = description;
+        this.resourceType = resourceType;
+        this.extras = extras;
+        this.address = address;
+        this.city = city;
+    }
+
+    public Resource(String name, String description, String resourceType, String extras, String address, String city, User owner) {
+        this.name = name;
+        this.description = description;
+        this.resourceType = resourceType;
+        this.extras = extras;
+        this.address = address;
+        this.city = city;
+        this.owner = owner;
     }
 }

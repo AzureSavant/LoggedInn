@@ -1,6 +1,7 @@
 package com.azure.LoggedInn.service.impl;
 
 import com.azure.LoggedInn.mappers.UserMapper;
+import com.azure.LoggedInn.models.Resource;
 import com.azure.LoggedInn.models.Role;
 import com.azure.LoggedInn.models.User;
 import com.azure.LoggedInn.repositories.RoleRepository;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -121,6 +123,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User repoUser = getUserByEmail(user.getEmail());
 
         this.userRepository.delete(repoUser);
+    }
+
+    @Override
+    @Transactional
+    public void addUserResource(long id, Resource resource) {
+        User repoUser = getUserById(id);
+        repoUser.getResources().add(resource);
+        this.userRepository.save(repoUser);
     }
 
     @Override

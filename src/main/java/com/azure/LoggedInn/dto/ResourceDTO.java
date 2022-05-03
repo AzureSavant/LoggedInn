@@ -20,4 +20,8 @@ public class ResourceDTO {
 
     private String extras;
 
+    private String address;
+
+    private String city;
+
 }

@@ -1,5 +1,6 @@
 package com.azure.LoggedInn.service;
 
+import com.azure.LoggedInn.models.Resource;
 import com.azure.LoggedInn.models.Role;
 import com.azure.LoggedInn.models.User;
 import org.springframework.stereotype.Repository;
@@ -35,4 +36,6 @@ public interface UserService {
     void deleteUser(long id);
 
     void deleteUser(User user);
+
+    void addUserResource(long id,Resource resource);
 }

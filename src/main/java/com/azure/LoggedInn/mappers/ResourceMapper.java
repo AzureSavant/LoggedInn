@@ -12,5 +12,5 @@ public interface ResourceMapper {
     ResourceDTO resourceToDTO(Resource resource);
 
     @Mappings({@Mapping(target = "id", ignore = true)})
-    void customResourceMap(@MappingTarget Resource targetResource, Resource sourceResource);
+    void customMapResource(@MappingTarget Resource targetResource, Resource sourceResource);
 }

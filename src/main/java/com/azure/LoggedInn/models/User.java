@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -44,8 +45,11 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>(); //maybe do this in constructor
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private List<Resource> resources = new ArrayList<>();
 
     public User(String name, String surname, String password, String email, String phoneNumber) {
         this.name = name;

@@ -1,6 +1,7 @@
 package com.azure.LoggedInn.service;
 
 import com.azure.LoggedInn.models.Resource;
+import com.azure.LoggedInn.models.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,9 +11,11 @@ public interface ResourceService {
 
     Resource getResourceById(long id);
 
-    Resource saveResource(Resource resource);
+    Resource createResource(Resource resource);
 
     List<Resource> getAll();
+
+    List<Resource> getAllByOwner(User owner);
 
     Resource updateResource(long id, Resource newResource);
 
@@ -20,5 +23,4 @@ public interface ResourceService {
 
     void  deleteResource(Resource resource);
 
-    void  updateResourcePassword(long id, String oldPassword, String newPassword);
 }

@@ -1,5 +1,6 @@
 package com.azure.LoggedInn.repositories;
 
+import com.azure.LoggedInn.models.Resource;
 import com.azure.LoggedInn.models.Role;
 import com.azure.LoggedInn.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> getFirstByEmail(String Email);
 
     List<User> getAllByRolesIn(Collection<Role> roles);
-    }
+
+    void deleteById(long id);
+
+    List<Resource> getAllById(long id);
+
+}
