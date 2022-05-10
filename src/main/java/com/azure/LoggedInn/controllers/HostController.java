@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.AttributeNotFoundException;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,16 +26,20 @@ public class HostController {
      @GetMapping
      @ResponseBody
      @ResponseStatus(code = HttpStatus.OK)
-     public List<User> getUsers(){
+     public List<UserDTO> getUsers(){
 
-          return userService.getAllWithRole(RoleNameConst.HOST);
+          List<User> users= userService.getAllWithRole(RoleNameConst.HOST);
+          List<UserDTO> userDTOS = new ArrayList<>();
+          users.forEach(user -> userDTOS.add(userMapper.UserToDTO(user)));
+          return userDTOS;
      }
 
      @GetMapping(params ="id")
      @ResponseBody
      @ResponseStatus(code = HttpStatus.OK)
-     public User getUserById(@RequestParam("id") long id){
-          return userService.getUserById(id);
+     public UserDTO getUserById(@RequestParam("id") long id){
+          User repoUser = userService.getUserById(id);
+          return userMapper.UserToDTO(repoUser);
      }
 
      @PostMapping("/register")
@@ -46,17 +52,16 @@ public class HostController {
                   user);
      }
 
-
      @PutMapping(value = "/update",params = "id")
      @ResponseBody
      @ResponseStatus(code = HttpStatus.OK)
      public User updateUser(@RequestParam("id") long id, @RequestBody @Valid UserDTO newUserDTO){
           User newUser = userMapper.DTOtoUser(newUserDTO);
 
-          return this.userService.updateUser(id, newUser);
+          return this.userService.updateUserById(id, newUser);
      }
 
-     // This might not be needed...
+
      @PutMapping(value = "/update")
      @ResponseStatus(code = HttpStatus.OK)
      public void updateUserEmail(@RequestBody @Valid EmailDTO emailDTO){

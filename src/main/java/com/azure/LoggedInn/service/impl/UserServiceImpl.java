@@ -85,9 +85,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User updateUser(long id, User newUser) {
+    public User updateUserById(long id, User newUser) {
         User repoUser = getUserById(id);
         userMapper.customMapUser(repoUser, newUser);
+
+        return this.userRepository.save(repoUser);
+    }
+
+    @Override
+    public User updateUserByEmail(String email, User newUser) {
+        User repoUser = getUserByEmail(email);
+        userMapper.customMapUser(repoUser,newUser);
 
         return this.userRepository.save(repoUser);
     }

@@ -5,7 +5,6 @@ import com.azure.LoggedInn.models.Role;
 import com.azure.LoggedInn.models.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -27,7 +26,9 @@ public interface UserService {
 
     User createUser(User user);
 
-    User updateUser(long id, User newUser);
+    User updateUserById(long id, User newUser);
+
+    User updateUserByEmail(String email, User newUser);
 
     void updateUserPassword(long id, String oldPassword, String newPassword);
 

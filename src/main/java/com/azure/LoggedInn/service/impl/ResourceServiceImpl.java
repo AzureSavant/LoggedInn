@@ -38,8 +38,8 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<Resource> getAllByOwner(User owner) {
-        return this.resourceRepository.getAllByOwner(owner);
+    public List<Resource> getAllByOwnerId(long id) {
+        return this.resourceRepository.getAllByOwnerId(id);
     }
 
     @Override
@@ -55,9 +55,5 @@ public class ResourceServiceImpl implements ResourceService {
         this.resourceRepository.deleteById(id);
     }
 
-    @Override
-    public void deleteResource(Resource resource) {
-        //To be implemented or removed
-    }
 
 }

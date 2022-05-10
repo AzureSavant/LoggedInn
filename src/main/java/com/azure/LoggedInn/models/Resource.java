@@ -43,14 +43,13 @@ public class Resource {
     private String address;
 
     @NotNull
-    @Column(name = "city", nullable = false, unique = true)
+    @Column(name = "city", nullable = false)
     private String city;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    //TODO: Implement relations between Rent, Resource_Cost
     public Resource(@NotEmpty String name, String description, @NotEmpty String resourceType, String extras) {
         this.name = name;
         this.description = description;
