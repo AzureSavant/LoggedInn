@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Setter
 @Getter
@@ -24,5 +25,7 @@ public class UserDTO {
     protected String email;
 
     protected String phoneNumber;
+
+    protected List<ResourceDTO> resources;
 
 }

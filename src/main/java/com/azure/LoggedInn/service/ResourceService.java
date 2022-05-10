@@ -1,7 +1,8 @@
 package com.azure.LoggedInn.service;
 
 import com.azure.LoggedInn.models.Resource;
-import com.azure.LoggedInn.models.User;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,12 +16,10 @@ public interface ResourceService {
 
     List<Resource> getAll();
 
-    List<Resource> getAllByOwner(User owner);
+    List<Resource> getAllByOwnerId( long id);
 
     Resource updateResource(long id, Resource newResource);
 
     void  deleteResource(long id);
-
-    void  deleteResource(Resource resource);
 
 }

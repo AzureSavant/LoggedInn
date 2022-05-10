@@ -46,7 +46,7 @@ public class User {
     private String phoneNumber;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>(); //maybe do this in constructor
+    private Collection<Role> roles = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     private List<Resource> resources = new ArrayList<>();
